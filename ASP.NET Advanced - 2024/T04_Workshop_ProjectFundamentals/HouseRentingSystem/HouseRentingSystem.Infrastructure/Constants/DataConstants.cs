@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HouseRentingSystem.Infrastructure.Constants
+﻿namespace HouseRentingSystem.Infrastructure.Constants
 {
     public static class DataConstants
     {
@@ -19,7 +13,10 @@ namespace HouseRentingSystem.Infrastructure.Constants
         public const int HouseDescriptionMaxLength = 500;
         public const int HouseDescriptionMinLength = 50;
 
-        public const string HouseRentingPariceMinValue = "0.00";
-        public const string HouseRentingPariceMaxValue = "2000.00";
+        public const string HouseRentingPriceMinValue = "0.00";
+        public const string HouseRentingPriceMaxValue = "2000.00";
+
+        public const int AgentPhoneNumberMaxLength = 15;
+        public const int AgentPhoneNumberMinLength = 7;
     }
 }

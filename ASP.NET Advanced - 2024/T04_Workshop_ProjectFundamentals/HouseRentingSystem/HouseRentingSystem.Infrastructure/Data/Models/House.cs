@@ -31,7 +31,8 @@ namespace HouseRentingSystem.Infrastructure.Data.Models
         public string ImageUrl { get; set; } = string.Empty;
 
         [Required]
-        //[Range(typeof(decimal), HouseRentingPariceMinValue, HouseRentingPariceMaxValue, ConvertValueInInvariantCulture = true)]
+        [Column(TypeName = "decimal(18,2)")]
+        //[Range(typeof(decimal), HouseRentingPriceMinValue, HouseRentingPriceMaxValue, ConvertValueInInvariantCulture = true)]
         [Comment("Price per month for the house")]
         public decimal PricePerMonth { get; set; }
 
