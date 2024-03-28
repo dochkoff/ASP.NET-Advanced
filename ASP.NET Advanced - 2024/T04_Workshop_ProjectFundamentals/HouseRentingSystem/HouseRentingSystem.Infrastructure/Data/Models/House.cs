@@ -5,53 +5,51 @@ using static HouseRentingSystem.Infrastructure.Constants.DataConstants;
 
 namespace HouseRentingSystem.Infrastructure.Data.Models
 {
+    [Comment("House to rent")]
     public class House
     {
         [Key]
-        [Comment("Primary key for the house")]
+        [Comment("House Identifier")]
         public int Id { get; set; }
 
         [Required]
         [MaxLength(HouseTitleMaxLength)]
-        [Comment("Title of the house")]
+        [Comment("Title")]
         public string Title { get; set; } = string.Empty;
 
         [Required]
         [MaxLength(HouseAddressMaxLength)]
-        [Comment("Address of the house")]
+        [Comment("House address")]
         public string Address { get; set; } = string.Empty;
 
         [Required]
         [MaxLength(HouseDescriptionMaxLength)]
-        [Comment("Description of the house")]
+        [Comment("House description")]
         public string Description { get; set; } = string.Empty;
 
         [Required]
-        [Comment("House image URL")]
+        [Comment("House image url")]
         public string ImageUrl { get; set; } = string.Empty;
 
         [Required]
+        [Comment("Monthly price")]
         [Column(TypeName = "decimal(18,2)")]
-        //[Range(typeof(decimal), HouseRentingPriceMinValue, HouseRentingPriceMaxValue, ConvertValueInInvariantCulture = true)]
-        [Comment("Price per month for the house")]
+        //[Range(typeof(decimal), HouseRentingPriceMinimum, HouseRentingPriceMaximum, ConvertValueInInvariantCulture = true)]
         public decimal PricePerMonth { get; set; }
 
         [Required]
-        [Comment("Category ID of the house")]
+        [Comment("Category identifier")]
         public int CategoryId { get; set; }
 
         [Required]
-        [Comment("Agent ID of the house")]
+        [Comment("Agent identifier")]
         public int AgentId { get; set; }
 
-        [Comment("User ID of the renter")]
+        [Comment("User id of the renterer")]
         public string? RenterId { get; set; }
 
-        [ForeignKey(nameof(CategoryId))]
         public Category Category { get; set; } = null!;
 
-        [ForeignKey(nameof(AgentId))]
         public Agent Agent { get; set; } = null!;
-
     }
 }

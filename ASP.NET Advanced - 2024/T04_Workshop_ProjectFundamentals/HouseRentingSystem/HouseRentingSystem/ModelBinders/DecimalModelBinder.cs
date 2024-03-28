@@ -12,15 +12,16 @@ namespace HouseRentingSystem.ModelBinders
 
             if (valueResult != ValueProviderResult.None && !string.IsNullOrEmpty(valueResult.FirstValue))
             {
-                decimal actulaValue = 0M;
+                decimal result = 0M;
                 bool success = false;
 
                 try
                 {
-                    string decValue = valueResult.FirstValue;
-                    decValue = decValue.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-                    decValue = decValue.Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-                    actulaValue = Convert.ToDecimal(decValue, CultureInfo.CurrentCulture);
+                    string strValue = valueResult.FirstValue.Trim();
+                    strValue = strValue.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+                    strValue = strValue.Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+
+                    result = Convert.ToDecimal(strValue, CultureInfo.CurrentCulture);
                     success = true;
                 }
                 catch (FormatException fe)
@@ -28,9 +29,9 @@ namespace HouseRentingSystem.ModelBinders
                     bindingContext.ModelState.AddModelError(bindingContext.ModelName, fe, bindingContext.ModelMetadata);
                 }
 
-                if (success)
+                if (success) 
                 {
-                    bindingContext.Result = ModelBindingResult.Success(actulaValue);
+                    bindingContext.Result = ModelBindingResult.Success(result);
                 }
             }
 

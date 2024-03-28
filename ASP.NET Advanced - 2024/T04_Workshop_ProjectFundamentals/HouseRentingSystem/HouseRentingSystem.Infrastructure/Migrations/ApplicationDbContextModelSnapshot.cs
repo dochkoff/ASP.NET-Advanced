@@ -17,7 +17,7 @@ namespace HouseRentingSystem.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.25")
+                .HasAnnotation("ProductVersion", "6.0.24")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -27,7 +27,7 @@ namespace HouseRentingSystem.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasComment("Primary key for the agent");
+                        .HasComment("Agent identifier");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
@@ -35,12 +35,12 @@ namespace HouseRentingSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)")
-                        .HasComment("Phone number of the agent");
+                        .HasComment("Agent's phone");
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasComment("User ID of the agent");
+                        .HasComment("User Identifier");
 
                     b.HasKey("Id");
 
@@ -67,7 +67,7 @@ namespace HouseRentingSystem.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasComment("Primary key for the category");
+                        .HasComment("Category Identifier");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
@@ -75,17 +75,19 @@ namespace HouseRentingSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
-                        .HasComment("Name of the category");
+                        .HasComment("Category name");
 
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
 
+                    b.HasComment("House category");
+
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            Name = "Cottage"
+                            Id = 3,
+                            Name = "Duplex"
                         },
                         new
                         {
@@ -94,8 +96,8 @@ namespace HouseRentingSystem.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = 3,
-                            Name = "Duplex"
+                            Id = 1,
+                            Name = "Cottage"
                         });
                 });
 
@@ -104,7 +106,7 @@ namespace HouseRentingSystem.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasComment("Primary key for the house");
+                        .HasComment("House Identifier");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
@@ -112,40 +114,40 @@ namespace HouseRentingSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)")
-                        .HasComment("Address of the house");
+                        .HasComment("House address");
 
                     b.Property<int>("AgentId")
                         .HasColumnType("int")
-                        .HasComment("Agent ID of the house");
+                        .HasComment("Agent identifier");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int")
-                        .HasComment("Category ID of the house");
+                        .HasComment("Category identifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)")
-                        .HasComment("Description of the house");
+                        .HasComment("House description");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasComment("House image URL");
+                        .HasComment("House image url");
 
                     b.Property<decimal>("PricePerMonth")
                         .HasColumnType("decimal(18,2)")
-                        .HasComment("Price per month for the house");
+                        .HasComment("Monthly price");
 
                     b.Property<string>("RenterId")
                         .HasColumnType("nvarchar(max)")
-                        .HasComment("User ID of the renter");
+                        .HasComment("User id of the renterer");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
-                        .HasComment("Title of the house");
+                        .HasComment("Title");
 
                     b.HasKey("Id");
 
@@ -155,7 +157,20 @@ namespace HouseRentingSystem.Infrastructure.Migrations
 
                     b.ToTable("Houses");
 
+                    b.HasComment("House to rent");
+
                     b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            Address = "Boyana Neighbourhood, Sofia, Bulgaria",
+                            AgentId = 1,
+                            CategoryId = 2,
+                            Description = "This luxurious house is everything you will need. It is just excellent.",
+                            ImageUrl = "https://i.pinimg.com/originals/a6/f5/85/a6f5850a77633c56e4e4ac4f867e3c00.jpg",
+                            PricePerMonth = 2000.00m,
+                            Title = "Grand House"
+                        },
                         new
                         {
                             Id = 1,
@@ -178,17 +193,6 @@ namespace HouseRentingSystem.Infrastructure.Migrations
                             ImageUrl = "https://cf.bstatic.com/xdata/images/hotel/max1024x768/179489660.jpg?k=2029f6d9589b49c95dcc9503a265e292c2cdfcb5277487a0050397c3f8dd545a&o=&hp=1",
                             PricePerMonth = 1200.00m,
                             Title = "Family House Comfort"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Address = "Boyana Neighbourhood, Sofia, Bulgaria",
-                            AgentId = 1,
-                            CategoryId = 2,
-                            Description = "This luxurious house is everything you will need. It is just excellent.",
-                            ImageUrl = "https://i.pinimg.com/originals/a6/f5/85/a6f5850a77633c56e4e4ac4f867e3c00.jpg",
-                            PricePerMonth = 2000.00m,
-                            Title = "Grand House"
                         });
                 });
 
@@ -313,15 +317,15 @@ namespace HouseRentingSystem.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d714ce75-a8be-4c98-8f8c-5fab260ae178",
+                            ConcurrencyStamp = "33e2a3c0-07f0-4fe0-ab1b-ec673a858115",
                             Email = "agent@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "agent@mail.com",
                             NormalizedUserName = "agent@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAxDR1DOdkWkxViaqOXOdhPIvJzwch6Kxxd0Lz2vw1UqGmhzgmnAqz/wZMhDAs49ZQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEYz87XYPk9BouCnQxOelJEBpXpxaS7+xcSmomBQ3j9rzt/WmSNafeAS/BJ8ok0KwQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9cf130cd-e8bf-4a23-af4f-7efad6f6d3e2",
+                            SecurityStamp = "bd24f769-b7b4-42ff-9e03-0553a85b2814",
                             TwoFactorEnabled = false,
                             UserName = "agent@mail.com"
                         },
@@ -329,15 +333,15 @@ namespace HouseRentingSystem.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f15e820d-f94f-4259-af48-45024fe8ab2e",
+                            ConcurrencyStamp = "f8245a1e-930f-4a91-9929-d98c8c86d464",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAECbrnpfM3DqYu4cpAwJnMHNYQQ2USOF4nl72rr6uEkJoD+p3MEBLrygMS4Mm62fuKw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJpIXVeamzxqRNTLACajrWurXt5CEKNOWc9FwyKOM7Doi3ggSFdanmclELv7cvHjxQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b7cf96bd-ece4-4e27-bea0-da77c9fcc191",
+                            SecurityStamp = "b8b28c20-9a9c-48a1-8f54-189a40fe6381",
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"
                         });

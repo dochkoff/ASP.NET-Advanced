@@ -1,22 +1,19 @@
 ﻿using HouseRentingSystem.Attributes;
 using HouseRentingSystem.Core.Contracts;
 using HouseRentingSystem.Core.Models.Agent;
-using HouseRentingSystem.Core.Services;
-using HouseRentingSystem.Extensions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static HouseRentingSystem.Infrastructure.Constants.MessageConstants;
+using System.Security.Claims;
+using static HouseRentingSystem.Core.Constants.MessageConstants;
 
 namespace HouseRentingSystem.Controllers
 {
-    [Authorize]
     public class AgentController : BaseController
     {
-        private readonly IAgentService _agentService;
+        private readonly IAgentService agentService;
 
-        public AgentController(IAgentService agentService)
+        public AgentController(IAgentService _agentService)
         {
-            _agentService = agentService;
+            agentService = _agentService;
         }
 
         [HttpGet]
@@ -32,23 +29,22 @@ namespace HouseRentingSystem.Controllers
         [NotAnAgent]
         public async Task<IActionResult> Become(BecomeAgentFormModel model)
         {
-            if (await _agentService.UserWithPhoneNumberExistsAsync(model.PhoneNumber))
+            if (await agentService.UserWithPhoneNumberExistsAsync(model.PhoneNumber)) 
             {
                 ModelState.AddModelError(nameof(model.PhoneNumber), PhoneExists);
             }
 
-            if (await _agentService.UserHasRentsAsync(User.Id()))
+            if (await agentService.UserHasRentsAsync(User.Id()))
             {
-                ModelState.AddModelError("Error", HasRent);
+                ModelState.AddModelError("Error", HasRents);
             }
 
-            if (ModelState.IsValid == false)
+            if (ModelState.IsValid == false) 
             {
                 return View(model);
             }
 
-            await _agentService.CreateAsync(User.Id(), model.PhoneNumber);
-
+            await agentService.CreateAsync(User.Id(), model.PhoneNumber);
 
             return RedirectToAction(nameof(HouseController.All), "House");
         }

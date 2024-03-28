@@ -1,23 +1,21 @@
-﻿using HouseRentingSystem.Infrastructure.Constants;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using static HouseRentingSystem.Infrastructure.Constants.DataConstants;
 
 namespace HouseRentingSystem.Infrastructure.Data.Models
 {
+    [Comment("House category")]
     public class Category
     {
         [Key]
-        [Comment("Primary key for the category")]
+        [Comment("Category Identifier")]
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(DataConstants.CategoryNameMaxLength)]
-        [Comment("Name of the category")]
+        [MaxLength(NameLength)]
+        [Comment("Category name")]
         public string Name { get; set; } = string.Empty;
 
-        [Required]
-        [MaxLength(DataConstants.CategoryNameMaxLength)]
-        [Comment("Collection of houses in the category")]
-        public IEnumerable<House> Houses { get; set; } = new List<House>();
+        public List<House> Houses { get; set; } = new List<House>();
     }
 }
